@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="460"
+   height="460"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/home/nicolas/src/workspace/Sms/res/drawable-xxhdpi/launcher.png"
+   inkscape:export-xdpi="28.17"
+   inkscape:export-ydpi="28.17">
+  <defs
+     id="defs4">
+    <filter
+       id="filter4401"
+       inkscape:label="Drop Shadow"
+       color-interpolation-filters="sRGB">
+      <feFlood
+         id="feFlood4403"
+         flood-opacity="0.683"
+         flood-color="rgb(0,0,0)"
+         result="flood" />
+      <feComposite
+         id="feComposite4405"
+         in2="SourceGraphic"
+         in="flood"
+         operator="in"
+         result="composite1" />
+      <feGaussianBlur
+         id="feGaussianBlur4407"
+         stdDeviation="6"
+         result="blur" />
+      <feOffset
+         id="feOffset4409"
+         dx="5"
+         dy="5"
+         result="offset" />
+      <feComposite
+         id="feComposite4411"
+         in2="offset"
+         in="SourceGraphic"
+         operator="over"
+         result="composite2" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.2771392"
+     inkscape:cx="231.31875"
+     inkscape:cy="225.11252"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1362"
+     inkscape:window-height="745"
+     inkscape:window-x="0"
+     inkscape:window-y="19"
+     inkscape:window-maximized="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-124.17355,-114.40249)">
+    <path
+       style="fill:#97ca32;fill-opacity:1;stroke:none;filter:url(#filter4401)"
+       d="m 162.72667,161.69622 1.25,288.75 97.875,0 0,86.4375 85,-85 201.40625,0 0,-290 -385.53125,-0.1875 z m 236.96875,96.625 c 9.86223,0 17.84375,7.98152 17.84375,17.84375 0,9.86223 -7.98152,17.875 -17.84375,17.875 -9.86223,0 -17.84375,-8.01277 -17.84375,-17.875 0,-9.86223 7.98152,-17.84375 17.84375,-17.84375 z m -92.15625,0.71875 c 9.86223,0 17.875,7.98152 17.875,17.84375 0,9.86223 -8.01277,17.84375 -17.875,17.84375 -9.86223,0 -17.84375,-7.98152 -17.84375,-17.84375 0,-9.86223 7.98152,-17.84375 17.84375,-17.84375 z m -35.125,62.5625 c 0,0 70.79905,54.65818 164.0625,0.8125 l 9.3125,16.09375 c -101.69533,58.71382 -184.53125,-2.03125 -184.53125,-2.03125 l 11.15625,-14.875 z"
+       id="path3774"
+       inkscape:connector-curvature="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4413"
+       style="font-size:56px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#bb0000;fill-opacity:1;stroke:#ffffff;stroke-opacity:1;font-family:Sans"
+       transform="translate(-115.15739,-31.314729)"><flowRegion
+         id="flowRegion4415"><rect
+           id="rect4417"
+           width="329.30975"
+           height="67.680222"
+           x="316.17773"
+           y="412.93561"
+           style="font-size:56px;fill:#bb0000;fill-opacity:1;stroke:#ffffff;stroke-opacity:1" /></flowRegion><flowPara
+         id="flowPara4421">SMSService</flowPara></flowRoot>  </g>
+</svg>
