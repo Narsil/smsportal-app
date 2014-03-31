@@ -3,6 +3,6 @@
 
     <string name="app_name">Sms</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="start">Start</string>
 
 </resources>

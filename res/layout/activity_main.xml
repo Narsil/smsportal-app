@@ -15,7 +15,14 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="155dp"
-        android:text="Start" />
+        android:text="@string/start" />
 
+     <TextView
+         android:id="@+id/delaytext"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:layout_centerVertical="true"
+         android:text="TextView" />
 
 </RelativeLayout>
