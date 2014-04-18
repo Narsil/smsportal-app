@@ -6,6 +6,7 @@ import java.util.Map;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
@@ -13,6 +14,11 @@ import android.telephony.SmsMessage;
 public class SMSReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
+        boolean noConnectivity = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+        if (noConnectivity){
+        	return;
+        }
+		
 		Map<String, String> msgs = RetrieveMessages(intent);
 		sendToXmppServer(msgs);
 	}
@@ -27,6 +33,7 @@ public class SMSReceiver extends BroadcastReceiver {
 				b.appendQueryParameter("Message", body);
 				String received_url = b.build().toString();
 				SMSService.resetDelta();
+				
 				new TouchTask().execute(received_url);
 			}
 		}

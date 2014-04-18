@@ -22,12 +22,7 @@ import android.util.Log;
 class RetreiveMessageTask extends AsyncTask<String, Void, JSONArray> {
 		private String TAG = "RetreiveMessageTask";
 		private String url = "";
-		private SMSService m_service;
 		
-		public RetreiveMessageTask(SMSService service) {
-		          this.m_service  = service;
-	   }
-
 		@Override
 		protected JSONArray doInBackground(String... urls) {
 			url = urls[0];
@@ -113,9 +108,9 @@ class RetreiveMessageTask extends AsyncTask<String, Void, JSONArray> {
 	        	String sent_url = b.build().toString();
 	        	new TouchTask().execute(sent_url);
 	        	
-	        	m_service.resetDelta();
+	        	SMSService.resetDelta();
 	        }{
-	        	m_service.increaseDelta();
+	        	SMSService.increaseDelta();
 	        }
 
 	    }

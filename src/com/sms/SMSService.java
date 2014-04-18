@@ -2,12 +2,15 @@ package com.sms;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -81,13 +84,21 @@ public class SMSService extends Service {
 		super.onDestroy();
 		isRunning = false;
 	}
+	
+    private boolean isNetworkConnected() {
+        final ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.getState() == NetworkInfo.State.CONNECTED;
+   }
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
 		Toast.makeText(getApplicationContext(), "SMSService Running ", Toast.LENGTH_SHORT).show();
-		new RetreiveMessageTask(this).execute(Defaults.URL);
 		
+		if (isNetworkConnected()){
+			new RetreiveMessageTask().execute(Defaults.URL);
+		}
 		
 
         Calendar cal = Calendar.getInstance();
@@ -107,7 +118,7 @@ public class SMSService extends Service {
 		DELTA = START_DELTA;		
 	}
 
-	public void increaseDelta() {
+	public static void increaseDelta() {
 		DELTA *= DELTA_MULTIPLIER;
 		if (DELTA > MAX_DELTA){
 			DELTA = MAX_DELTA;
