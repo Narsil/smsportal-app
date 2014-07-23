@@ -1,20 +1,28 @@
 package com.sms;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.provider.ContactsContract;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -123,12 +131,79 @@ public class MainActivity extends Activity {
         }
 	}
 	
+	protected ArrayList<Pair<String, String>> getContacts(){
+		ContentResolver cr = getContentResolver();
+		Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+	    ArrayList<Pair<String, String>> alContacts = new ArrayList<Pair<String, String>>();
+		if(cursor.moveToFirst())
+		{
+
+		    do
+		    {
+		        String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+
+		        if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
+		        {
+		            Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
+		            while (pCur.moveToNext()) 
+		            {
+		                String contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+		                String display = pCur.getString(pCur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+		                alContacts.add(new Pair<String, String>(contactNumber, display));
+		                break;
+		            }
+		            pCur.close();
+		        }
+
+		    } while (cursor.moveToNext()) ;
+		    cursor.close();
+		    
+		}
+		return alContacts;
+	}
+	
+	protected void sendContacts(){
+		ArrayList<Pair<String, String>> contacts = getContacts();
+		ArrayList<String> urls = new ArrayList<String>();
+		for (Pair<String, String> contact: contacts){
+			try {
+				String id = contact.first;
+				String name = contact.second;
+				String contactid = URLEncoder.encode(id.replaceAll("\\s", "") + "@sms.nicolas.kwyk.fr", "UTF-8");
+				String contactname = URLEncoder.encode(name, "UTF-8");
+				String url = "http://sms.nicolas.kwyk.fr/contacts/add/?User=nicolas&Id=" + contactid + "&Name=" + contactname + "&Group=Phones";
+				urls.add(url);
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		new TouchTask().execute(urls.toArray(new String[0]));
+
+	}
+	
+	protected void setSendContactsBtn(){
+		Button btn = (Button) findViewById(R.id.btn_send_contacts);
+		btn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				sendContacts();
+				
+			}
+
+		});
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.v(TAG, "Starting MainActivity");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
         resetBtn();
+        setSendContactsBtn();
 
 	}
 
