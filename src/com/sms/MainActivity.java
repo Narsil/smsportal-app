@@ -4,6 +4,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -148,8 +153,17 @@ public class MainActivity extends Activity {
 		            while (pCur.moveToNext()) 
 		            {
 		                String contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-		                String display = pCur.getString(pCur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-		                alContacts.add(new Pair<String, String>(contactNumber, display));
+		                PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+		                try {
+		                	PhoneNumber frNumberProto = phoneUtil.parse(contactNumber, "FR");
+							String frNumber = phoneUtil.format(frNumberProto, PhoneNumberFormat.INTERNATIONAL);
+							String display = pCur.getString(pCur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+							alContacts.add(new Pair<String, String>(frNumber, display));
+		                } catch (NumberParseException e) {
+		                	// Ignore non phone numbers
+		                  System.err.println("NumberParseException was thrown for " + contactNumber + ": " + e.toString());
+		                }
+
 		                break;
 		            }
 		            pCur.close();
