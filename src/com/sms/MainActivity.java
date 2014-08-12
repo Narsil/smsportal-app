@@ -149,24 +149,27 @@ public class MainActivity extends Activity {
 
 		        if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
 		        {
-		            Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
-		            while (pCur.moveToNext()) 
+		            Cursor phones = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
+		            while (phones.moveToNext()) 
 		            {
-		                String contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-		                PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-		                try {
-		                	PhoneNumber frNumberProto = phoneUtil.parse(contactNumber, "FR");
-							String frNumber = phoneUtil.format(frNumberProto, PhoneNumberFormat.INTERNATIONAL);
-							String display = pCur.getString(pCur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-							alContacts.add(new Pair<String, String>(frNumber, display));
-		                } catch (NumberParseException e) {
-		                	// Ignore non phone numbers
-		                  System.err.println("NumberParseException was thrown for " + contactNumber + ": " + e.toString());
+		                int phoneType = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+		                if (phoneType == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE){
+			                String contactNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+			                PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+			                try {
+			                	PhoneNumber frNumberProto = phoneUtil.parse(contactNumber, "FR");
+								String frNumber = phoneUtil.format(frNumberProto, PhoneNumberFormat.INTERNATIONAL);
+								String display = phones.getString(phones.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+								alContacts.add(new Pair<String, String>(frNumber, display));
+			                } catch (NumberParseException e) {
+			                	// Ignore non phone numbers
+			                  System.err.println("NumberParseException was thrown for " + contactNumber + ": " + e.toString());
+			                }
+	
+			                break;
 		                }
-
-		                break;
 		            }
-		            pCur.close();
+		            phones.close();
 		        }
 
 		    } while (cursor.moveToNext()) ;
